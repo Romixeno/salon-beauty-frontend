@@ -29,6 +29,10 @@ export class EmployeesService {
   addEmployee(formData: FormData) {
     return this.http.post(`${this.httpUrl}/addEmployee`, formData);
   }
+
+  managerUpdateEmployee(formData: FormData, id: string) {
+    return this.http.patch(`${this.httpUrl}/updateEmployee/${id}`, formData);
+  }
   updateEmployee(formData: FormData, id: string) {
     // /updateEmployee/:id
     return this.http.patch(`${this.httpUrl}/employee/update/${id}`, formData);

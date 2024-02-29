@@ -253,7 +253,7 @@ export class MgEmployeesFormComponent {
       this.appendFormData();
 
       this.employeeService
-        .updateEmployee(this.formData, this.selectedEmployee._id)
+        .managerUpdateEmployee(this.formData, this.selectedEmployee._id)
         .subscribe({
           next: (response) => {
             console.log(response);
