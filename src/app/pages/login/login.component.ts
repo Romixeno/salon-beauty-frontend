@@ -24,11 +24,11 @@ export class LoginComponent {
   message: any | null;
   ngOnInit() {
     this.loginForm = new FormGroup({
-      email: new FormControl(null, [
+      email: new FormControl('test@gmail.com', [
         Validators.required,
         CustomValidator.emailFormat,
       ]),
-      password: new FormControl(null, Validators.required),
+      password: new FormControl('1234', Validators.required),
     });
 
     this.message = this.location.getState();

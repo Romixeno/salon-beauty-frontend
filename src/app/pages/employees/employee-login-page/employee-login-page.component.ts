@@ -19,8 +19,11 @@ export class EmployeeLoginPageComponent {
   employeeService: EmployeesService = inject(EmployeesService);
   ngOnInit() {
     this.employeeForm = new FormGroup({
-      email: new FormControl(null, [Validators.email, Validators.required]),
-      password: new FormControl(null, [Validators.required]),
+      email: new FormControl('employee@gmail.com', [
+        Validators.email,
+        Validators.required,
+      ]),
+      password: new FormControl('123', [Validators.required]),
     });
   }
 

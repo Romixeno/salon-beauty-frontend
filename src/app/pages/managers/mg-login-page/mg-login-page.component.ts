@@ -16,8 +16,11 @@ export class MgLoginPageComponent {
   authService: AuthService = inject(AuthService);
   ngOnInit() {
     this.mgForm = new FormGroup({
-      email: new FormControl(null, [Validators.email, Validators.required]),
-      password: new FormControl(null, [Validators.required]),
+      email: new FormControl('manager@gmail.com', [
+        Validators.email,
+        Validators.required,
+      ]),
+      password: new FormControl('1234', [Validators.required]),
     });
   }
 
