@@ -14,14 +14,14 @@ export class AppointmentService {
     this.httpUrl = httpUrl;
   }
   newAppointment(data: AppointmentModel) {
-    return this.http.post(`${this.httpUrl}/new`, data);
+    return this.http.post(`${this.httpUrl}/appointment/new`, data);
   }
 
   getClientAppointment(id: string) {
-    return this.http.get(`${this.httpUrl}/client/${id}`);
+    return this.http.get(`${this.httpUrl}/appointment/client/${id}`);
   }
 
   getEmployeeTasks(employeeId: string) {
-    return this.http.get(`${this.httpUrl}/employee/${employeeId}`);
+    return this.http.get(`${this.httpUrl}/appointment/employee/${employeeId}`);
   }
 }
