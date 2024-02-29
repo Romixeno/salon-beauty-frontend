@@ -1,0 +1,19 @@
+<div class="header-bottom-links">
+  <a
+    [routerLink]="['']"
+    [routerLinkActiveOptions]="{ exact: true }"
+    routerLinkActive="active"
+    >Home</a
+  >
+  <a
+    [routerLink]="['/services']"
+    [routerLinkActiveOptions]="{ exact: false }"
+    routerLinkActive="active"
+    >Services</a
+  >
+  <a [routerLink]="['/about-us']" routerLinkActive="active">About us</a>
+  <a href="#">Contact</a>
+  <a [routerLink]="['/appointment/new']" routerLinkActive="active"
+    >Appointment</a
+  >
+</div>

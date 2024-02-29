@@ -1,0 +1,93 @@
+<div class="services-table-container">
+  <div class="table-wrapper">
+    <div class="table-title">
+      <h2>Manage Services</h2>
+      <div class="sb sb-success success-message" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+      <div class="services-option">
+        <button (click)="onRefresh()">
+          Refresh <i class="fa-regular fa-rotate-right"></i>
+        </button>
+        <button class="add-employee" (click)="showForm()">
+          <i class="fa-sharp fa-solid fa-plus"></i> Add Services
+        </button>
+      </div>
+    </div>
+    <div class="sb sb-error error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+    <div class="loading" *ngIf="showLoading"></div>
+    <table *ngIf="serviceList && !showLoading">
+      <tr>
+        <th>type</th>
+        <th>name</th>
+        <th>description</th>
+        <th>price</th>
+        <th>duration</th>
+        <th>commission</th>
+        <th>image</th>
+        <th>action</th>
+      </tr>
+      <!-- <ng-container *ngIf="serviceList"> -->
+
+      <tr *ngFor="let service of serviceList">
+        <td>{{ service.type }}</td>
+        <td>{{ service.name }}</td>
+        <td class="description">
+          {{ service.description }}
+        </td>
+        <td>{{ service.price }}€</td>
+        <td>
+          {{
+            service.duration > 60
+              ? (service.duration / 60).toFixed(1) + " h"
+              : service.duration + " min"
+          }}
+        </td>
+        <td>{{ service.commission }}%</td>
+        <td>
+          <img src="{{ baseUrl + service.image }}" alt="" />
+        </td>
+        <td class="td-option">
+          <div>
+            <button
+              class="btn-edit"
+              title="edit"
+              (click)="showUpdateForm(service)"
+            >
+              <i class="fa-regular fa-pen-to-square"></i>
+            </button>
+            <button
+              class="btn-delete"
+              title="delete"
+              (click)="toggleConfirmModal(service)"
+            >
+              <i class="fa-regular fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      <!-- </ng-container> -->
+    </table>
+    <h1 *ngIf="serviceList?.length == 0 && !showLoading">
+      No services added yet [ ]
+    </h1>
+  </div>
+</div>
+<mg-services-form
+  *ngIf="showFormServices"
+  (onCloseFormClicked)="closeForm()"
+  (loadingState)="setLoadingToTrue($event)"
+  (setSuccessMessage)="setSuccessMessage($event)"
+  [isEditMode]="isEditMode"
+  [service]="selectedService"
+></mg-services-form>
+<confirm-modal *ngIf="showConfirmation">
+  <button class="btn-modal btn-cancel" (click)="toggleConfirmModal()">
+    Cancel
+  </button>
+  <button class="btn-modal btn-confirm" (click)="onDeleteBtnConfirmed()">
+    Confirm
+  </button>
+</confirm-modal>

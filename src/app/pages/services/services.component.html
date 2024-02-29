@@ -1,0 +1,108 @@
+<welcome-message>
+  <h1 class="presentation-text">
+    Discover Your Perfect Pampering Experience with Our Range of Luxurious
+    Services
+  </h1>
+</welcome-message>
+<section class="services-container">
+  <div class="filter-container">
+    <div class="filter">
+      <div class="filter-search">
+        <span>Search</span>
+        <input type="text" [(ngModel)]="searchedText" placeholder="Search..." />
+        <button class="btn-search" (click)="searchBtnClicked()">search</button>
+      </div>
+      <div class="filter-category">
+        <span for="">Category</span>
+        <div class="radio-container">
+          <div class="radio-box" *ngFor="let type of servicesType">
+            <input
+              type="radio"
+              [value]="type.name"
+              [(ngModel)]="selectedCategory"
+              (change)="onCategoryChange($event)"
+            />
+            <label for="">{{ type.name }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="all-services-types">
+    <div
+      class="no-display"
+      *ngIf="!servicesList || servicesList?.length == 0"
+      @fade
+    >
+      <h2>No services to display..</h2>
+      <h2 *ngIf="errorMessage">{{ errorMessage }}</h2>
+    </div>
+    <ng-container *ngIf="servicesList">
+      <ng-container *ngFor="let type of servicesType">
+        <div class="services-type" *ngIf="hasServicesForType(type.name)" @fade>
+          <h1>{{ type.name }}</h1>
+          <div class="services-list">
+            <ng-container *ngFor="let service of getServicesForType(type.name)">
+              <div class="service-item">
+                <button
+                  (click)="addRemoveServiceFavorite(service._id)"
+                  class="preference-button"
+                  *ngIf="userType == 'Client'"
+                  [ngClass]="{ favorite: verifyServicePreference(service._id) }"
+                >
+                  <ng-container
+                    *ngIf="
+                      !verifyServicePreference(service._id);
+                      else favoriteButton
+                    "
+                  >
+                    <i class="fa-light fa-heart" @fav></i>
+                  </ng-container>
+                  <ng-template #favoriteButton>
+                    <i class="fa-solid fa-heart" @fav></i>
+                  </ng-template>
+                </button>
+
+                <div class="service-item-img">
+                  <img [src]="baseUrl + service.image" alt="" />
+                </div>
+                <div class="service-item-bottom">
+                  <div class="service-item-details">
+                    <h3 class="service-item-detail-name">{{ service.name }}</h3>
+                    <span class="service-detail-price"
+                      ><i class="fa-solid fa-tag"></i>Price:
+                      <strong>{{ service.price }}€</strong></span
+                    >
+                    <span class="service-detail-duration"
+                      ><i class="fa-regular fa-timer"></i>Duration Approx.:
+                      <strong>{{
+                        service.duration | durationFormat
+                      }}</strong></span
+                    >
+                    <p class="service-detail-description">
+                      {{ service.description }}
+                    </p>
+                  </div>
+                  <div class="service-item-btn">
+                    <button
+                      [routerLink]="['/appointment']"
+                      [state]="{
+                        serviceId: service._id,
+                        serviceType: service.type
+                      }"
+                    >
+                      Make an appointment
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</section>
+<div class="overlay" *ngIf="showLoading">
+  <div class="loader"></div>
+</div>

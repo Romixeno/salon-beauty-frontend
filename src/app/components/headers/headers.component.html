@@ -1,0 +1,97 @@
+<div
+  class="header"
+  appScroll
+  *ngIf="!user || userType == 'Client' || userType == 'Employee'"
+>
+  <div class="header-top">
+    <div class="header-top-left">
+      <span><i class="fa-regular fa-phone"></i> +261 38 70 846 43</span>
+    </div>
+    <div class="header-top-right">
+      <ng-container *ngIf="userType == 'Client'">
+        <div class="user-info" (click)="toggleDropdown()">
+          <div class="user-avatar">
+            <img
+              [src]="user.image ? baseUrl + user.image : 'assets/noavatar.jpg'"
+              alt=""
+            />
+          </div>
+          <div class="icon-menu">
+            <i class="fa-regular fa-chevron-down"></i>
+          </div>
+          <div
+            class="dropdown-menu"
+            [ngClass]="{ active: showDropdown }"
+            *ngIf="showDropdown"
+            @fade
+          >
+            <a [routerLink]="['/profile']"
+              >My profile <i class="fa-light fa-user"></i
+            ></a>
+            <a [routerLink]="['/preferences']"
+              >My Preferences <i class="fa-regular fa-star"></i
+            ></a>
+            <a [routerLink]="['/appointment/lists']"
+              >My appointment <i class="fa-solid fa-calendar-week"></i>
+            </a>
+            <a (click)="onLogout()"
+              >Logout <i class="fa-thin fa-right-from-bracket"></i
+            ></a>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="userType === 'Employee'">
+        <div class="user-info" (click)="toggleDropdown()">
+          <div class="user-avatar">
+            <img src="{{ baseUrl + user.image }}" alt="" />
+          </div>
+          <div class="icon-menu">
+            <i class="fa-regular fa-chevron-down"></i>
+          </div>
+
+          <div
+            class="dropdown-menu"
+            [ngClass]="{ active: showDropdown }"
+            *ngIf="showDropdown"
+          >
+            <a (click)="onEmployeeLogout()"
+              >Logout <i class="fa-thin fa-right-from-bracket"></i
+            ></a>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!isLoggedIn">
+        <a [routerLink]="['/signup']">Sign up</a>
+        <span>|</span>
+        <a [routerLink]="['/login']" routerLinkActive="link-active"
+          ><i class="fa-light fa-user"></i> Log in</a
+        >
+      </ng-container>
+    </div>
+  </div>
+  <div class="header-bottom">
+    <div class="header-bottom-logo">
+      <!-- Logo -->
+      <h1>Beauty Salon.</h1>
+    </div>
+
+    <ng-container *ngIf="!userType || userType == 'Client'">
+      <client-guest-link></client-guest-link>
+    </ng-container>
+    <ng-container *ngIf="userType == 'Employee'">
+      <employee-link></employee-link>
+    </ng-container>
+
+    <span
+      class="search-icon"
+      *ngIf="userType == 'Client' || !user"
+      [routerLink]="['/search']"
+    >
+      <i class="fa-light fa-search"></i>
+    </span>
+  </div>
+</div>
+<app-mg-header
+  *ngIf="user && userType == 'Manager'"
+  [user]="user"
+></app-mg-header>
